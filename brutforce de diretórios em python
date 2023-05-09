@@ -1,0 +1,13 @@
+import requests
+
+lista = open("diretório\do\arquivo\.txt\lista.txt", "r")
+
+url = input("digite a url: ")
+
+for d in lista:
+   
+    new_url = f"{url}/{d}".strip()
+    print(new_url)
+    r = requests.get(url)
+    
+    print(r.status_code)
